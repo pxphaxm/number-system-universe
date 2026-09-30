@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เข้าสู่ระบบ - Number System Universe 🌟</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Mali', cursive !important; }
+        body { background: linear-gradient(135deg, #fce7f3 0%, #e0f2fe 100%); min-height: 100vh; }
+        .input-box { width: 100%; padding: 0.75rem 1rem; border: 2px solid #ddd6fe; border-radius: 1rem; outline: none; margin-bottom: 1rem; transition: border-color 0.3s; }
+        .input-box:focus { border-color: #a855f7; box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.1); }
+        .btn { width: 100%; padding: 0.75rem; border-radius: 1rem; font-weight: bold; color: white; cursor: pointer; transition: transform 0.2s; }
+        .btn:hover { transform: translateY(-2px); }
+        .btn-primary { background: linear-gradient(to right, #a855f7, #ec4899); box-shadow: 0 4px 14px 0 rgba(236, 72, 153, 0.39); }
+    </style>
+</head>
+<body class="flex items-center justify-center p-4">
+    <div class="bg-white/90 backdrop-blur-md p-8 rounded-[2rem] shadow-xl w-full max-w-md border-2 border-white">
+        <div class="text-center mb-6">
+            <h1 class="text-3xl font-bold text-purple-600 mb-2" id="form-title">เข้าสู่ระบบ ✨</h1>
+            <p class="text-gray-500 text-sm" id="form-subtitle">ยินดีต้อนรับกลับสู่ Number System Universe</p>
+        </div>
+
+        <form id="auth-form" onsubmit="handleAuth(event)">
+            <input type="email" id="email" class="input-box" placeholder="อีเมล (Email)" required>
+            <input type="password" id="password" class="input-box" placeholder="รหัสผ่าน (อย่างน้อย 6 ตัว)" required minlength="6">
+            
+            <div id="role-selection" class="hidden mb-4 p-4 bg-purple-50 rounded-2xl border border-purple-100">
+                <p class="text-sm font-bold text-purple-700 mb-2">เลือกบทบาทของคุณ:</p>
+                <div class="flex gap-4">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="role" value="student" checked class="text-purple-600">
+                        <span class="text-gray-700">🎓 นักศึกษา</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="role" value="teacher" class="text-purple-600">
+                        <span class="text-gray-700">👩‍🏫 ครู/อาจารย์</span>
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary text-lg" id="submit-btn">เข้าสู่ระบบ</button>
+        </form>
+
+        <div class="mt-6 text-center text-sm">
+            <span class="text-gray-500" id="toggle-text">ยังไม่มีบัญชีใช่ไหม?</span>
+            <button onclick="toggleMode()" class="text-purple-600 font-bold hover:underline ml-1" id="toggle-btn">สมัครสมาชิกที่นี่</button>
+        </div>
+        <div class="mt-4 text-center"><a href="index.html" class="text-sm text-gray-400 hover:text-purple-500">🏠 กลับหน้าแรก</a></div>
+    </div>
+
+    <!-- Script สำหรับ Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // เดี๋ยวเราจะเอา URL และ KEY มาใส่ตรงนี้ในขั้นตอนที่ 3
+        const supabaseUrl = 'sb_publishable_HNZVbY2JDt0ws-k96--cBA_o8xzYiZG';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR4YXFpb2Vsb3lycXJ3anBsZXZ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA3NzA3NjIsImV4cCI6MjEwNjM0Njc2Mn0.dGK09fDmmQbcN7a3AgVBk3MUqAS-ZNrtZ6YCsEpCczU';
+        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+        let isLoginMode = true;
+
+        function toggleMode() {
+            isLoginMode = !isLoginMode;
+            document.getElementById('form-title').innerText = isLoginMode ? 'เข้าสู่ระบบ ✨' : 'สมัครสมาชิก 🌈';
+            document.getElementById('form-subtitle').innerText = isLoginMode ? 'ยินดีต้อนรับกลับ' : 'สร้างบัญชีใหม่';
+            document.getElementById('submit-btn').innerText = isLoginMode ? 'เข้าสู่ระบบ' : 'ยืนยันการสมัครสมาชิก';
+            document.getElementById('toggle-text').innerText = isLoginMode ? 'ยังไม่มีบัญชีใช่ไหม?' : 'มีบัญชีอยู่แล้ว?';
+            document.getElementById('toggle-btn').innerText = isLoginMode ? 'สมัครสมาชิกที่นี่' : 'เข้าสู่ระบบเลย';
+            document.getElementById('role-selection').classList.toggle('hidden', isLoginMode);
+        }
+
+        async function handleAuth(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            document.getElementById('submit-btn').innerText = 'กำลังประมวลผล...';
+
+            if (isLoginMode) {
+                const { error } = await supabase.auth.signInWithPassword({ email, password });
+                if (error) alert('เข้าสู่ระบบล้มเหลว: ' + error.message);
+                else {
+                    alert('เข้าสู่ระบบสำเร็จ!');
+                    window.location.href = 'index.html';
+                }
+            } else {
+                const role = document.querySelector('input[name="role"]:checked').value;
+                const { data, error } = await supabase.auth.signUp({ email, password });
+                
+                if (error) alert('สมัครสมาชิกล้มเหลว: ' + error.message);
+                else if (data.user) {
+                    await supabase.from('user_profiles').insert([{ id: data.user.id, email: email, role: role }]);
+                    alert('สมัครสมาชิกสำเร็จ! กรุณาเข้าสู่ระบบ');
+                    toggleMode();
+                }
+            }
+            document.getElementById('submit-btn').innerText = isLoginMode ? 'เข้าสู่ระบบ' : 'ยืนยันการสมัครสมาชิก';
+        }
+    </script>
+</body>
+</html>
