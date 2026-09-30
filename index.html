@@ -32,44 +32,92 @@
         <h1 class="text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 py-2">Number System Universe</h1>
     </header>
 
-    <!-- เมนูเลือกฐาน (เปลี่ยนเป็นปุ่มไปหน้าต่างๆ) -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full mb-12">
-        <a href="base2.html" class="block group">
-            <div class="h-full bg-white rounded-[2rem] p-8 border-2 border-pink-200 card-hover text-center relative overflow-hidden">
-                <div class="text-6xl mb-4 group-hover:scale-110 transition-transform">🐰</div>
-                <h3 class="text-2xl font-bold text-rose-600 mb-2">ระบบเลขฐาน 2</h3>
-                <div class="mt-4 bg-pink-500 text-white px-6 py-2 rounded-full font-bold inline-block">ไปลุยกันเลย!</div>
+    <!-- กรอบความรู้ (แสดงให้ทุกคนเห็นเสมอ) -->
+    <div class="w-full bg-white/80 backdrop-blur-md rounded-[2.5rem] cute-shadow border-2 border-white p-8 md:p-10 mb-12 relative overflow-hidden">
+        <div class="absolute -top-10 -left-10 w-32 h-32 bg-yellow-100 rounded-full mix-blend-multiply filter blur-2xl opacity-60"></div>
+        <div class="absolute -bottom-10 -right-10 w-32 h-32 bg-pink-100 rounded-full mix-blend-multiply filter blur-2xl opacity-60"></div>
+
+        <div class="relative z-10">
+            <h2 class="text-2xl md:text-3xl font-bold text-purple-800 mb-6 flex items-center gap-3">
+                <span class="text-4xl">💡</span> ระบบเลขฐาน คืออะไร?
+            </h2>
+            <p class="text-lg text-purple-900/80 mb-6 leading-relaxed">
+                ในชีวิตประจำวันเราคุ้นเคยกับ <strong>"เลขฐาน 10"</strong> (มีเลข 0-9) เพราะมนุษย์เรามี 10 นิ้ว 🖐️ แต่สำหรับคอมพิวเตอร์และอุปกรณ์อิเล็กทรอนิกส์ พวกเขาพูดคุยและเก็บข้อมูลด้วยภาษาที่ต่างออกไป:
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-pink-50/70 border border-pink-200 p-5 rounded-3xl">
+                    <div class="text-3xl mb-2">💻</div>
+                    <h3 class="font-bold text-rose-700 text-lg mb-2">ฐาน 2 (Binary)</h3>
+                    <p class="text-sm text-rose-900/70 leading-relaxed">มีแค่เลข <strong>0 กับ 1</strong> (ปิด/เปิด) เป็นภาษาพื้นฐานที่สุดที่คอมพิวเตอร์เข้าใจได้โดยตรงเลย</p>
+                </div>
+                <div class="bg-purple-50/70 border border-purple-200 p-5 rounded-3xl">
+                    <div class="text-3xl mb-2">📦</div>
+                    <h3 class="font-bold text-purple-700 text-lg mb-2">ฐาน 8 (Octal)</h3>
+                    <p class="text-sm text-purple-900/70 leading-relaxed">มีเลข <strong>0-7</strong> ถูกสร้างขึ้นมาเพื่อจัดกลุ่มเลขฐาน 2 ให้สั้นลง ทำให้มนุษย์อ่านและเขียนได้ง่ายขึ้น</p>
+                </div>
+                <div class="bg-blue-50/70 border border-blue-200 p-5 rounded-3xl">
+                    <div class="text-3xl mb-2">🎨</div>
+                    <h3 class="font-bold text-blue-700 text-lg mb-2">ฐาน 16 (Hex)</h3>
+                    <p class="text-sm text-blue-900/70 leading-relaxed">มีเลข <strong>0-9 และ A-F</strong> นิยมใช้บอกรหัสสี หรือที่อยู่ในหน่วยความจำให้กระชับ</p>
+                </div>
             </div>
-        </a>
-        <a href="base8.html" class="block group">
-            <div class="h-full bg-white rounded-[2rem] p-8 border-2 border-purple-200 card-hover text-center relative overflow-hidden">
-                <div class="text-6xl mb-4 group-hover:scale-110 transition-transform">🍇</div>
-                <h3 class="text-2xl font-bold text-purple-600 mb-2">ระบบเลขฐาน 8</h3>
-                <div class="mt-4 bg-purple-500 text-white px-6 py-2 rounded-full font-bold inline-block">ไปลุยกันเลย!</div>
-            </div>
-        </a>
-        <a href="base16.html" class="block group">
-            <div class="h-full bg-white rounded-[2rem] p-8 border-2 border-blue-200 card-hover text-center relative overflow-hidden">
-                <div class="text-6xl mb-4 group-hover:scale-110 transition-transform">☁️</div>
-                <h3 class="text-2xl font-bold text-blue-600 mb-2">ระบบเลขฐาน 16</h3>
-                <div class="mt-4 bg-blue-500 text-white px-6 py-2 rounded-full font-bold inline-block">ไปลุยกันเลย!</div>
-            </div>
-        </a>
+        </div>
+    </div>
+
+    <!-- กล่องแจ้งเตือนให้ล็อกอิน (จะแสดงเมื่อยังไม่ล็อกอิน) -->
+    <div id="login-warning" class="w-full text-center bg-white/80 backdrop-blur-md rounded-3xl p-8 border-2 border-pink-200 shadow-sm mb-12">
+        <h2 class="text-2xl font-bold text-rose-600 mb-4">🔒 ล็อกอินเพื่อปลดล็อกฟังก์ชันคำนวณ</h2>
+        <p class="text-purple-800 font-semibold mb-6">คุณต้องเข้าสู่ระบบหรือสมัครสมาชิกก่อน จึงจะสามารถใช้งานเครื่องมือแปลงเลขฐานได้ครับ ✨</p>
+        <a href="auth.html" class="inline-block bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-3 rounded-full font-bold shadow-md hover:scale-105 transition">ไปหน้าเข้าสู่ระบบเลย 🚀</a>
+    </div>
+
+    <!-- เมนูเลือกฐานคำนวณ (จะถูกซ่อนไว้ และแสดงเมื่อล็อกอินแล้วเท่านั้น) -->
+    <div id="calc-menu" class="hidden w-full mb-12">
+        <div class="text-center mb-6">
+            <h2 class="text-2xl font-bold text-purple-800">เลือกเลขฐานที่ต้องการคำนวณเลย 👇</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
+            <a href="base2.html" class="block group">
+                <div class="h-full bg-white rounded-[2rem] p-8 border-2 border-pink-200 card-hover text-center relative overflow-hidden">
+                    <div class="text-6xl mb-4 group-hover:scale-110 transition-transform">🐰</div>
+                    <h3 class="text-2xl font-bold text-rose-600 mb-2">ระบบเลขฐาน 2</h3>
+                    <div class="mt-4 bg-pink-500 text-white px-6 py-2 rounded-full font-bold inline-block">ไปลุยกันเลย!</div>
+                </div>
+            </a>
+            <a href="base8.html" class="block group">
+                <div class="h-full bg-white rounded-[2rem] p-8 border-2 border-purple-200 card-hover text-center relative overflow-hidden">
+                    <div class="text-6xl mb-4 group-hover:scale-110 transition-transform">🍇</div>
+                    <h3 class="text-2xl font-bold text-purple-600 mb-2">ระบบเลขฐาน 8</h3>
+                    <div class="mt-4 bg-purple-500 text-white px-6 py-2 rounded-full font-bold inline-block">ไปลุยกันเลย!</div>
+                </div>
+            </a>
+            <a href="base16.html" class="block group">
+                <div class="h-full bg-white rounded-[2rem] p-8 border-2 border-blue-200 card-hover text-center relative overflow-hidden">
+                    <div class="text-6xl mb-4 group-hover:scale-110 transition-transform">☁️</div>
+                    <h3 class="text-2xl font-bold text-blue-600 mb-2">ระบบเลขฐาน 16</h3>
+                    <div class="mt-4 bg-blue-500 text-white px-6 py-2 rounded-full font-bold inline-block">ไปลุยกันเลย!</div>
+                </div>
+            </a>
+        </div>
     </div>
 
     <!-- Script สำหรับ Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         const supabaseUrl = 'https://txaqioeloyrqrwjplevu.supabase.co';
-        const supabaseKey = 'sb_publishable_HNZVbY2JDt0ws-k96--cBA_o8xzYiZG';
-        // เปลี่ยนชื่อตัวแปรเป็น supabaseClient เพื่อไม่ให้ซ้ำกับระบบ
+        const supabaseKey = 'sb_publishable_HNZVbY2JDt0wS-k96--cBA_o8xZYiZG';
         const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
         async function checkUser() {
             const { data: { session } } = await supabaseClient.auth.getSession();
             if (session) {
+                // ถ้าล็อกอินแล้ว: ซ่อนปุ่มเข้าสู่ระบบ, แสดงข้อมูลผู้ใช้, ซ่อนคำเตือนล็อกอิน, แสดงเมนูคำนวณ
                 document.getElementById('login-prompt-bar').classList.add('hidden');
                 document.getElementById('user-info-bar').classList.remove('hidden');
+                document.getElementById('login-warning').classList.add('hidden');
+                document.getElementById('calc-menu').classList.remove('hidden');
+                
                 document.getElementById('user-email-display').innerText = '👤 ' + session.user.email;
 
                 // ดึงข้อมูลบทบาท (Role)
@@ -78,6 +126,10 @@
                     const roleText = profile.role === 'teacher' ? '👩‍🏫 ครู/อาจารย์' : '🎓 นักศึกษา';
                     document.getElementById('user-role-display').innerText = roleText;
                 }
+            } else {
+                // ถ้ายังไม่ล็อกอิน: ให้คงค่าเริ่มต้นคือ แสดงคำเตือนล็อกอิน และซ่อนเมนูคำนวณไว้
+                document.getElementById('login-warning').classList.remove('hidden');
+                document.getElementById('calc-menu').classList.add('hidden');
             }
         }
 
