@@ -60,20 +60,20 @@
     <!-- Script สำหรับ Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // เดี๋ยวเราจะเอา URL และ KEY มาใส่ตรงนี้ในขั้นตอนที่ 3
         const supabaseUrl = 'https://txaqioeloyrqrwjplevu.supabase.co';
-        const supabaseKey = 'sb_publishable_HNZVbY2JDt0ws-k96--cBA_o8xzYiZG';
-        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+        const supabaseKey = 'sb_publishable_HNZVbY2JDt0wS-k96--cBA_o8xZYiZG';
+        // เปลี่ยนชื่อตัวแปรเป็น supabaseClient เพื่อไม่ให้ซ้ำกับระบบ
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
         async function checkUser() {
-            const { data: { session } } = await supabase.auth.getSession();
+            const { data: { session } } = await supabaseClient.auth.getSession();
             if (session) {
                 document.getElementById('login-prompt-bar').classList.add('hidden');
                 document.getElementById('user-info-bar').classList.remove('hidden');
                 document.getElementById('user-email-display').innerText = '👤 ' + session.user.email;
 
                 // ดึงข้อมูลบทบาท (Role)
-                const { data: profile } = await supabase.from('user_profiles').select('role').eq('id', session.user.id).single();
+                const { data: profile } = await supabaseClient.from('user_profiles').select('role').eq('id', session.user.id).single();
                 if (profile) {
                     const roleText = profile.role === 'teacher' ? '👩‍🏫 ครู/อาจารย์' : '🎓 นักศึกษา';
                     document.getElementById('user-role-display').innerText = roleText;
@@ -82,7 +82,7 @@
         }
 
         async function logout() {
-            await supabase.auth.signOut();
+            await supabaseClient.auth.signOut();
             window.location.reload();
         }
 

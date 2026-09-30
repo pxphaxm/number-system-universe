@@ -46,7 +46,7 @@
 
         <div class="mt-6 text-center text-sm">
             <span class="text-gray-500" id="toggle-text">ยังไม่มีบัญชีใช่ไหม?</span>
-            <button onclick="toggleMode()" class="text-purple-600 font-bold hover:underline ml-1" id="toggle-btn">สมัครสมาชิกที่นี่</button>
+            <button type="button" onclick="toggleMode()" class="text-purple-600 font-bold hover:underline ml-1" id="toggle-btn">สมัครสมาชิกที่นี่</button>
         </div>
         <div class="mt-4 text-center"><a href="index.html" class="text-sm text-gray-400 hover:text-purple-500">🏠 กลับหน้าแรก</a></div>
     </div>
@@ -54,10 +54,10 @@
     <!-- Script สำหรับ Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // เดี๋ยวเราจะเอา URL และ KEY มาใส่ตรงนี้ในขั้นตอนที่ 3
         const supabaseUrl = 'https://txaqioeloyrqrwjplevu.supabase.co';
-        const supabaseKey = 'sb_publishable_HNZVbY2JDt0ws-k96--cBA_o8xzYiZG';
-        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+        const supabaseKey = 'sb_publishable_HNZVbY2JDt0wS-k96--cBA_o8xZYiZG';
+        // เปลี่ยนชื่อตัวแปรเป็น supabaseClient เพื่อไม่ให้ซ้ำกับระบบ
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
         let isLoginMode = true;
 
@@ -78,7 +78,7 @@
             document.getElementById('submit-btn').innerText = 'กำลังประมวลผล...';
 
             if (isLoginMode) {
-                const { error } = await supabase.auth.signInWithPassword({ email, password });
+                const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
                 if (error) alert('เข้าสู่ระบบล้มเหลว: ' + error.message);
                 else {
                     alert('เข้าสู่ระบบสำเร็จ!');
@@ -86,11 +86,11 @@
                 }
             } else {
                 const role = document.querySelector('input[name="role"]:checked').value;
-                const { data, error } = await supabase.auth.signUp({ email, password });
+                const { data, error } = await supabaseClient.auth.signUp({ email, password });
                 
                 if (error) alert('สมัครสมาชิกล้มเหลว: ' + error.message);
                 else if (data.user) {
-                    await supabase.from('user_profiles').insert([{ id: data.user.id, email: email, role: role }]);
+                    await supabaseClient.from('user_profiles').insert([{ id: data.user.id, email: email, role: role }]);
                     alert('สมัครสมาชิกสำเร็จ! กรุณาเข้าสู่ระบบ');
                     toggleMode();
                 }
